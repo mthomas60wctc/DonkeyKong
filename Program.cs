@@ -14,12 +14,10 @@ if (!File.Exists(file))
 }
 else
 {
-    // create parallel lists of character details
+    // create list of characters
     // lists are used since we do not know number of lines of data
-    List<UInt64> Ids = [];
-    List<string> Names = [];
-    List<string?> Descriptions = [];
-    // to populate the lists with data, read from the data file
+    // to populate the list with data, read from the data file
+    List<Character> characters = [];
     try
     {
         StreamReader sr = new(file);
@@ -30,14 +28,16 @@ else
             string? line = sr.ReadLine();
             if (line is not null)
             {
+                Character character = new();
                 // character details are separated with comma(,)
                 string[] characterDetails = line.Split(',');
                 // 1st array element contains id
-                Ids.Add(UInt64.Parse(characterDetails[0]));
+                character.Id = UInt64.Parse(characterDetails[0]);
                 // 2nd array element contains character name
-                Names.Add(characterDetails[1]);
+                character.Name = characterDetails[1] ?? string.Empty;
                 // 3rd array element contains character description
-                Descriptions.Add(characterDetails[2]);
+                character.Description = characterDetails[2] ?? string.Empty;
+                characters.Add(character);
             }
         }
         sr.Close();
@@ -46,6 +46,7 @@ else
     {
         logger.Error(ex.Message);
     }
+/*
     string? choice;
     do
     {
@@ -107,6 +108,7 @@ else
             }
         }
     } while (choice == "1" || choice == "2");
+*/
 }
 
 logger.Info("Program ended");
