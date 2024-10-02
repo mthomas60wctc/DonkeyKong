@@ -29,8 +29,8 @@ else
       if (line is not null)
       {
         Character character = new();
-        // character details are separated with comma(,)
-        string[] characterDetails = line.Split(',');
+        // character details are separated with pipe(|)
+        string[] characterDetails = line.Split('|');
         // 1st array element contains id
         character.Id = UInt64.Parse(characterDetails[0]);
         // 2nd array element contains character name
@@ -81,7 +81,7 @@ else
           character.Description = Console.ReadLine() ?? string.Empty;
           // create file from data
           StreamWriter sw = new(file, true);
-          sw.WriteLine($"{character.Id},{character.Name},{character.Description}");
+          sw.WriteLine($"{character.Id}|{character.Name}|{character.Description}");
           sw.Close();
           // add new character details to Lists
           characters.Add(character);
